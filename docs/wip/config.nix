@@ -59,6 +59,61 @@
         link_to_library_root = true;
       };
     };
+
+    # specifies default settings for all `mute album <subcommand>` calls
+    commands = {
+
+      metadata = {
+        fetch = {
+          metadata_providers = {
+
+            # the <name>
+            musicbrainz = {
+
+              # relative paths where `album metadata fetch -m <provider> <url> <path>` will be saved to with <path> ommited
+              path = "Info/musicbrainz.json";
+
+              # way to specify the fetcher binary from
+              # `outputs.packages.${system}.album-metadata-fetch-<name>`
+              # value falls back to "album-metadata-fetch-<name>"
+              package = "album-metadata-fetch-musicbrainz"
+            };
+
+            discogs = {
+              path = "Info/discogs.json";
+            };
+
+            arbitrary_provider1 = {
+              path = "arbitrary_path1.json";
+            };
+
+            arbitrary_provider2 = {
+              path = "arbitrary_path2.json";
+            };
+          };
+        };
+      };
+
+      manifest = {
+        metadata_providers = {
+          musicbrainz.path = ./Info/musicbrainz.json;
+          discogs.path = ./Info/discogs.json;
+          arbitrary_provider1.path = ./arbitrary_path1.json;
+          arbitrary_provider2.path = ./arbitrary_path2.json;
+        };
+      };
+        # relative paths where `album manifest -M <provider> <provider>` will be read from
+        # or where `album manifest -m <provider> <path>` will read from with <path> ommited
+        default_metadata_providers_paths = {
+          musicbrainz = ./Info/musicbrainz.json;
+          discogs = ./Info/discogs.json;
+          arbitrary_provider1 = ./arbitrary_path1.json;
+          arbitrary_provider2 = ./arbitrary_path2.json;
+        };
+      };
+
+      fetch = {};
+    };
   };
 
   # commands to run on `fetch` and `build`

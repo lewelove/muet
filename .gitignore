@@ -1,4 +1,5 @@
 **/target/
+**/llm.md
 .direnv/
 .repomixignore
 .sync.sh
