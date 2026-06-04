@@ -1,12 +1,16 @@
-# sourceTorrent {};
+# `sourceTorrent`
 
-`sourceTorrent` is a nix attribute that allows to pin the 
+`sourceTorrent` purpose is to pin the torrent file hash and data it downloads as well as provide source name
 
-## ATTRIBUTES
+```nix
 
-### `file = ./path.to/file.torrent`
+sourceTorent {
 
-- specifies the path to torrent file that will be used to fetch data from
-- must always be relative down path against album.nix
+  # name of the source
+  name = "hello??";
+  file = ./what ;
+  hash = "";
+  origin.hash = "";
+}
 
-### 
+```

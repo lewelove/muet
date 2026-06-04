@@ -4,7 +4,7 @@
 
 ### -m / --metadata
 
-this flag handles sources for intermediary json generation and can be repeated any number of times
+this flag handles filesystem metadata sources for intermediary json generation and can be repeated any number of times
 
 -m flag has two arguments
 
@@ -25,7 +25,10 @@ examples:
 examples:
     `mute album manifest -M musicbrainz discogs` (config paths required)
 
-### -s
+### -s / --source
 
-this flag is used to specify source
+this flag handles the spec of one of sourceTorrent or sourceDisk name, type, path and filter expression
+
+example: `mute album manifest -s <TYPE> <NAME> <PATH> <EXPRESSION>`
+
 
