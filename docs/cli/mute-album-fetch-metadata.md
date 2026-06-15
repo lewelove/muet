@@ -1,6 +1,6 @@
-# `mute album metadata fetch`
+# `mute album fetch metadata`
 
-`mute album metadata fetch` is a command that is used to fetch album data from external providers and save it within album folder for further consumption by `mute album manifest`
+`mute album fetch metadata` is a command that is used to fetch album data from external providers and save it within album folder for further consumption by `mute album manifest`
 
 ## METADATA PROVIDERS FLAGS
 
@@ -9,7 +9,7 @@
 this flag handles specification of external metadata providers to fetch the `.json` file
 
 it has 2 arguments:
-- `mute album metadata fetch -p <NAME> <VALUE>`
+- `mute album fetch metadata -p <NAME> <VALUE>`
 
 `<NAME>`
 - script name
@@ -21,13 +21,13 @@ it has 2 arguments:
 each `<NAME>` must be directly associated with specific script set in config that will execute with `<VALUE>` as single input argument
 
 example:
-- `mute album metadata fetch -p musicbrainz https://...`
+- `mute album fetch metadata -p musicbrainz https://...`
 
 ### `-P` & `-a`
 
-these two can be used to call scripts by name and provide single argument for each of them. useful if one argument can lead to different providers
+these two can be used to call scripts by name and provide single argument for each of them. useful if one argument can lead to different data based on provider
 
-- `mute album metadata fetch -P <NAME> <NAME> -a <VALUE>`
+- `mute album fetch metadata -P <NAME> <NAME> -a <VALUE>`
 
 `<NAME>`
 - script name
@@ -39,7 +39,7 @@ these two can be used to call scripts by name and provide single argument for ea
 if `-P` is used `-a` must exist as well
 
 example:
-- `mute album metadata fetch -P musicbrainz discogs -a https://...`
+- `mute album fetch metadata -P musicbrainz discogs -a https://...`
 
 ## BUILTIN SCRIPTS
 
@@ -59,7 +59,7 @@ this script ingests url string to either album `release` or `release-group`
 
 ### `discogs`
 
-this script can ingest both musicbrainz `release` and `release-group` urls or discogs `release` and `master`
+this script can ingest both musicbrainz `release` and `release-group` urls or discogs `release` and `master` urls
 
 `https://musicbrainz.org/release/...`
 - resolves `discogs.com/release/...` url

@@ -60,59 +60,64 @@
       };
     };
 
-    # specifies default settings for all `mute album <subcommand>` calls
-    commands = {
+    # specifies default arguments for all `mute album <subcommand>` calls
+    arguments = {
 
-      metadata = {
-        fetch = {
-          metadata_providers = {
+      # mute album fetch metadata
+      fetch.metadata = {
+        providers = {
 
-            # the <name>
-            musicbrainz = {
+          # the <name>
+          musicbrainz = {
 
-              # relative paths where `album metadata fetch -m <provider> <url> <path>` will be saved to with <path> ommited
-              path = "Info/musicbrainz.json";
+            # relative paths where `album metadata fetch -p <provider> <value>` will be saved to
+            path = "Info/musicbrainz.json";
 
-              # way to specify the fetcher binary from
-              # `outputs.packages.${system}.album-metadata-fetch-<name>`
-              # value falls back to "album-metadata-fetch-<name>"
-              package = "album-metadata-fetch-musicbrainz"
-            };
+            # way to specify the fetcher binary that will be ran from `outputs.packages.${system}`
+            package = "album-metadata-fetch-musicbrainz"
+          };
 
-            discogs = {
-              path = "Info/discogs.json";
-            };
-
-            arbitrary_provider1 = {
-              path = "arbitrary_path1.json";
-            };
-
-            arbitrary_provider2 = {
-              path = "arbitrary_path2.json";
-            };
+          discogs = {
+            path = "Info/discogs.json";
+            package = "album-metadata-fetch-discogs"
           };
         };
       };
 
+      # mute album manifest
       manifest = {
-        metadata_providers = {
+
+        # -M / -m / --metadata
+        metadata = {
           musicbrainz.path = ./Info/musicbrainz.json;
           discogs.path = ./Info/discogs.json;
-          arbitrary_provider1.path = ./arbitrary_path1.json;
-          arbitrary_provider2.path = ./arbitrary_path2.json;
         };
-      };
-        # relative paths where `album manifest -M <provider> <provider>` will be read from
-        # or where `album manifest -m <provider> <path>` will read from with <path> ommited
-        default_metadata_providers_paths = {
-          musicbrainz = ./Info/musicbrainz.json;
-          discogs = ./Info/discogs.json;
-          arbitrary_provider1 = ./arbitrary_path1.json;
-          arbitrary_provider2 = ./arbitrary_path2.json;
-        };
-      };
 
-      fetch = {};
+        # --st / --source-torrent
+        sourceTorrent = {
+          main = {
+            path = "./source.torrent";
+            filter = "**/*";
+          };
+        };
+
+        # --sd / --source-disk
+        sourceDisk = {
+          cover = {
+            path = "./cover.png";
+            filter = "**/*";
+          };
+        };
+
+        # sets packages to execute against produces intermediary
+        execute = {
+
+          # way to specify the manifest binary that will be ran from `outputs.packages.${system}`
+          default.package = "album-manifest-default";
+
+          name.package = "album-manifest-name";
+        };
+      };
     };
   };
 
@@ -120,34 +125,19 @@
   # ${origin.path} resolution happens automatically based on --source specified
   commands = {
 
-    # --source torrent
-    torrent = {
+    sourceTorrent = {
 
-      # runs at `mute fetch`
-      # reads the torrent file and starts download to origin
-      # recommended command:
-      # fetch = "transmission-remote -a '${source.torrent.file}' -w '${origin.path}'";
-      fetch = "";
+      # runs at `mute album fetch source --st`
+      # reads the package and executes it
+      fetch.default.package = "album-fetch-source-default-sourceTorrent";
 
-      # runs at `mute build`
+      # runs at `mute album build`
       # used to verify 100% seedability and pairity to ${source.torrent.file}
-      # skipped if auto-resolved ${origin.path} is already in custom store
-      # recommended command:
-      # verify = "imdl torrent verify '${source.torrent.file}' --content '${origin.path}/${source.torrent.name}'";
-      verify = "";
+      verify.default.package = "album-build-verify-default-sourceTorrent";
 
       # runs after successful `mute build`
       # used to ping the torrent daemon with custom-store-bound ${origin.path} to seed from it directly
-      seed = "transmission-remote -a '${source.torrent.file}' -w '${origin.path}'";
-    };
-
-    # --source torrent
-    web = {
-
-      # runs at `mute fetch`
-      # recommended command:
-      # fetch = "curl -L '${source.web.url}' -o '${origin.path}'";
-      fetch = "";
+      seed.default.package = "album-build-seed-default-sourceTorrent";
     };
   };
 }

@@ -4,7 +4,7 @@
 
 ## METADATA FLAGS
 
-### `-m` / `--metadata`
+### `--metadata` / `-m`
 
 this flag handles filesystem metadata sources for intermediary json generation and can be repeated any number of times
 
@@ -30,7 +30,7 @@ examples:
 
 these flags handle the specification of `sourceTorrent` / `sourceDisk` name, path and filter expression
 
-### `--st` / `--source-torrent`
+### `--source-torrent` / `--st`
 
 `--source-torrent` is used to provide source based on .torrent file for `mute` to read and generate appropriate intermediary json attribute
 
@@ -63,11 +63,22 @@ if 1 argument:
 example:
 - `mute album manifest --st main` -> `main`'s `<PATH>` and `<FILTER_EXPRESSION>` are read from config
 
-### `--sd` / `--source-disk`
+### `--source-disk` / `--sd`
 
 ## SCRIPT EXECUTION FLAG
 
-### `-x` / `--execute`
+### `--execute` / `-x`
 
 `--execute` is used to specify script that will consume intermediary json and provide stdout by name
+
+if `--execute` is omitted -> the package falls back to `album-manifest-default`
+
+has 1 argument:
+- `mute album manifest --execute <NAME>`
+
+`<NAME>`
+- targets the `config.album.arguments.manifest.execute.<NAME>.package` to execute
+
+example:
 - `mute album manifest -M musicbrainz --st main --execute main_script`
+
