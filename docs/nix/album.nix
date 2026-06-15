@@ -27,11 +27,8 @@ let
   };
 
   cover = mute.sourceDisk {
-    name = "";
-    origin = {
-      path = "";
-      hash = "";
-    };
+    path = "";
+    hash = "";
   };
 
 in
