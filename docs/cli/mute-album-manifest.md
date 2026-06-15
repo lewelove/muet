@@ -8,7 +8,7 @@
 
 this flag handles filesystem metadata sources for intermediary json generation and can be repeated any number of times
 
--m flag has two arguments
+has 2 arguments:
 - `mute album manifest -m <NAME> <PATH>`
 
 all `<NAME>` providers must have dedicated `<PATH>` to json/toml file, resolved either by cli argument or automatic fallback based on `<NAME>`
@@ -70,4 +70,4 @@ example:
 ### `-x` / `--execute`
 
 `--execute` is used to specify script that will consume intermediary json and provide stdout by name
-`mute album manifest -M musicbrainz --st main -x main_script`
+- `mute album manifest -M musicbrainz --st main --execute main_script`
